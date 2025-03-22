@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+--- 
+
+<Layout img="home" title="Home - Space Tourism" description="Space Tourism is a company that offers trips to space.">
+    <section class="flex items-center justify-around lg:justify-between min-h-screen text-white/70 px-40 flex-col lg:flex-row">
+        <article class="lg:max-w-1/2 flex flex-col gap-5 text-center lg:text-start">
+            <p class="font-barlow-condensed text-[28px] uppercase text-nowrap">so, you want to travel to</p>
+            <h1 class="font-bellefair uppercase text-[100px] text-white">Space</h1>
+            <p class="font-barlow lg:max-w-lg w-full text-[18px] text-balance leading-6">Lers face it: if you want to go to space, you might as well
+                genuinely go to outer space and nov hover kind of on the
+                edge of it. Well sit back, and relax because well qive you
+                a truly out of this world experience!</p>
+            </article>
+            <a href="/Destination" class="relative bg-white group text-primary text-4xl font-bellefair size-[200px] md:size-[272px] rounded-full aspect-square text-center flex  items-center justify-center">
+                    EXPLORE
+                <div class="bg-white/30 absolute rounded-full aspect-square size-1 group-hover:scale-[70]  md:group-hover:scale-[100] transition-transform duration-150 ease-in-out left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>  
+            </a>
+        </section>
+</Layout>
+

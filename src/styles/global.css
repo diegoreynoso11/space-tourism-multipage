@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: Bellefair;
+    src: url("./../assets/fonts/Bellefair-Regular.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: Barlow_regular;
+    src: url("./../assets/fonts/Barlow-Regular.ttf") format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: Barlow;
+    src: url("./../assets/fonts/BarlowCondensed-Regular.ttf") format("truetype");
+    font-display: swap;
+}
+@theme {
+        --color-primary: #0b0d17;
+        --color-secondary: #d0d6f9;
+        --font-bellefair : "Bellefair", "Roboto";
+        --font-barlow-condensed : "Barlow", "Roboto";
+        --font-barlow : "Barlow_regular", "Roboto";
+}
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.animate-side-left {
+    animation: sideLeft 0.5s ease-in-out;
+}
+@keyframes sideLeft {
+    from {
+        opacity: 0;
+        transform: translate(-150px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0px);
+    }
+}
+.animate-side-right {
+    animation: sideRight 0.5s ease-in-out;
+}
+@keyframes sideRight {
+    from {
+        opacity: 0;
+        transform: translate(150px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0px);
+    }
+}
+.animate-side-top {
+    animation: sideTop 0.5s ease-in-out;
+}
+@keyframes sideTop {
+    from {
+        opacity: 0;
+        transform: translateY(150px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+.animate-fade-out {
+    animation: fadeOut 0.5s ease-in-out both;
+}
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

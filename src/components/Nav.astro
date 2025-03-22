@@ -1,0 +1,79 @@
+---
+import Logo from '../../public/assets/shared/logo.svg'; 
+import SnackBar from "../../public/assets/shared/icon-hamburger.svg";
+import Close from "../../public/assets/shared/icon-close.svg";
+---
+
+
+<nav class="text-white px-10 md:px-0 md:pl-10 uppercase font-barlow-condensed flex justify-between  items-center pt-5">
+        <Logo></Logo>
+        <div class="h-[.5px] w-[600px] bg-white/30 translate-x-20 z-50 hidden 2xl:block"></div>
+        <div id="page_selectors" class="gap-6 lg:min-w-[800px] min-w-[600px] justify-around items-center backdrop-blur-md h-20 hidden md:flex">
+            <a href="/"><strong>00</strong> Home</a>
+            <a href="/Destination"><strong>01</strong> Destination</a>
+            <a href="/Crew"><strong>02</strong> Crew</a>
+            <a href="/Technology"><strong>03</strong> Technology</a>
+        </div>
+        <SnackBar id="open_modal" class="md:hidden block"></SnackBar>
+        <div id="modal" class="h-screen w-full absolute top-0 left-0 bg-zinc-900 z-40 hidden">
+                <Close id="close" class="z-[999] absolute top-0 right-0 m-10"></Close>
+            <div id="modal_links" class="relative flex flex-col px-20 text-3xl tracking-widest items-start justify-center h-full gap-6">
+                <a href="/"><strong>00</strong> Home</a>
+                <div id="indicator" class="absolute bg-white rounded-full h-10 w-1 right-0"></div>
+                <a href="/Destination"><strong>01</strong> Destination</a>
+                <a href="/Crew"><strong>02</strong> Crew</a>
+                <a href="/Technology"><strong>03</strong> Technology</a>
+            </div>
+        </div>
+    </nav>
+
+<script>
+    const allSelectors = document.querySelectorAll("#page_selectors a");
+    const url = window.location.pathname;
+    const modal = document.querySelector("#modal");
+    const close = document.querySelector("#close");
+    const open_modal = document.querySelector("#open_modal");
+    const allSelectorsMovile = document.querySelectorAll("#modal_links a");
+    const indicator = document.querySelector("#indicator");
+
+    open_modal?.addEventListener("click", () => {
+        modal?.classList.remove("hidden");
+        modal?.classList.add("animate-fade-in");
+
+        setTimeout(updateIndicator, 50);
+    });
+
+    function closeSnackBar() {
+        modal?.classList.add("animate-fade-out");
+        setTimeout(() => {
+            modal?.classList.add("hidden");
+            modal?.classList.remove("animate-fade-out");
+        }, 1000);
+    }
+
+    close?.addEventListener("click", closeSnackBar);
+
+    function updateIndicator() {
+        allSelectorsMovile.forEach((selector) => {
+            if (new URL(selector.href).pathname === url) {
+                const offsetTop = selector.offsetTop;
+                indicator.style.top = `${offsetTop}px`; 
+                indicator.style.transition = "top 0.3s ease-in-out"; // 🔹 Suaviza la animación
+            }
+        });
+    }
+
+    allSelectorsMovile.forEach((selector) => {
+        selector.addEventListener("click", () => {
+            updateIndicator();
+            closeSnackBar(); 
+        });
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+        if (!modal.classList.contains("hidden")) {
+            updateIndicator();
+        }
+    });
+
+</script>

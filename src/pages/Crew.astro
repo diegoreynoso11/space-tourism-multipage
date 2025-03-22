@@ -1,0 +1,124 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Point from "@assets/shared/point.svg"
+---
+
+<Layout img="crew" title="Crew - Space Tourism" description="Space Tourism is a company that offers trips to space.">
+    <section class="flex flex-col text-white/70 md:px-40 px-10 justify-center relative overflow-hidden min-h-screen">
+        <span id="next" class="px-10 hidden md:block active:translate-x-4 text-4xl absolute right-0 cursor-pointer hover:font-bold transition-all">{">"}</span>
+        <span id="prev" class=" hidden md:block active:-translate-x-4 px-10 text-4xl absolute left-0 cursor-pointer hover:font-bold transition-all">{"<"}</span>
+        <h3 class="font-barlow-condensed text-2xl uppercase tracking-wider m-auto py-20 md:py-0 md:m-0">02 meet you crew</h3>
+        <article class="flex relative justify-around gap-20 w-full flex-col md:flex-row items-center uppercase">
+            <div class="flex flex-col gap-5 items-center text-center">
+                <h3 class="font-bellefair text-lg md:text-3xl text-white/40" id="rol"></h3>
+                <p class="font-bellefair md:text-6xl text-4xl" id="name"></p>
+                <p class="font-barlow max-w-lg capitalize" id="bio"></p>
+            </div>
+            <img class="max-h-[602px]" id="img" src="" alt="">
+            <ul id="selector_role" class="flex absolute top-0 -mt-15 md:bottom-0 gap-4 md:gap-10 py-0 md:py-20">
+                <li class="cursor-pointer" value="0"><Point fill={"white"}/></li>
+                <li class="cursor-pointer" value="1"><Point/></li>
+                <li class="cursor-pointer" value="2"><Point/></li>
+                <li class="cursor-pointer" value="3"><Point/></li>
+            </ul>
+        </article>
+    </section>
+</Layout>
+
+<script>
+    import { crew } from "@assets/data.json"
+    let next = document.getElementById('next')
+    let prev = document.getElementById('prev')
+    let rol = document.getElementById('rol')
+    let name = document.getElementById('name')
+    let bio = document.getElementById('bio')
+    let img = document.getElementById('img')
+    let selector_role = document.getElementById('selector_role')
+    let allRoles = document.querySelectorAll('#selector_role li')
+    let crew_n = 0
+    function changeRole() {
+        allRoles.forEach((role) => {
+        const svg = role.querySelector("svg");
+        if (svg) {
+            svg.setAttribute("fill", "gray");
+            svg.setAttribute("stroke", "gray");
+        }
+    });
+
+    const selectedSvg = allRoles[crew_n].querySelector("svg");
+    if (selectedSvg) {
+        selectedSvg.setAttribute("fill", "white");
+        selectedSvg.setAttribute("stroke", "white");
+    }
+    }
+    function actualiceElements () {
+        rol?.classList.add("animate-fade-in");
+        name?.classList.add("animate-side-left")
+        bio?.classList.add("animate-side-top")
+        img?.classList.add("animate-fade-in")
+        setTimeout(() => {
+            rol?.classList.remove("animate-fade-in");
+        name?.classList.remove("animate-side-left")
+        bio?.classList.remove("animate-side-top")
+        img?.classList.remove("animate-fade-in")
+        }, 500);
+    }
+    next?.addEventListener("click", () => {
+        if (img instanceof HTMLImageElement) {
+            crew_n = crew_n === 3 ? 0 : crew_n +1
+            if (rol && name && bio && img) {
+                rol.innerHTML = crew[crew_n].role
+                name.innerHTML = crew[crew_n].name
+                bio.innerHTML = crew[crew_n].bio
+                img.src = crew[crew_n].images.webp
+            }
+        }
+            actualiceElements()
+            changeRole()
+    })
+    prev?.addEventListener("click", () => {
+        if (img instanceof HTMLImageElement) {
+
+            crew_n = crew_n === 0 ? 3 : crew_n - 1
+            if (rol && name && bio && img) {
+                rol.innerHTML = crew[crew_n].role
+                name.innerHTML = crew[crew_n].name
+                bio.innerHTML = crew[crew_n].bio
+                img.src = crew[crew_n].images.webp
+            }
+        }
+        actualiceElements()
+        changeRole()
+    })
+    
+    selector_role?.addEventListener("click", (e) => {
+        const selectedLi = (e.target as HTMLElement).closest("li");
+        if (!selectedLi) return;
+        crew_n = selectedLi.value
+        if (img instanceof HTMLImageElement) {
+            if (rol && name && bio && img) {
+                rol.innerHTML = crew[crew_n].role
+                name.innerHTML = crew[crew_n].name
+                bio.innerHTML = crew[crew_n].bio
+                img.src = crew[crew_n].images.webp
+            }
+        }
+    actualiceElements()
+    changeRole()
+    })
+    if (img instanceof HTMLImageElement) {
+        if (rol && name && bio && img) {
+            rol.innerHTML = crew[crew_n].role
+            name.innerHTML = crew[crew_n].name
+            bio.innerHTML = crew[crew_n].bio
+            img.src = crew[crew_n].images.webp
+        }
+    }
+
+</script> 
+
+<style> 
+    img {
+        mask-image: linear-gradient(black 50%, transparent);
+    }
+</style>

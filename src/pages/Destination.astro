@@ -1,0 +1,86 @@
+---
+import Layout from '@layouts/Layout.astro'
+---
+ 
+<Layout img="destination" title="Destination - Space Tourism" description="Space Tourism is a company that offers trips to space.">
+    <section class="flex flex-col gap-10 text-white/70 md:px-40 px-10 py-20 overflow-hidden">
+        <h3 class="font-barlow-condensed text-2xl uppercase md:text-start md:m-0 text-center m-auto tracking-wider text-nowrap">01 Pick your destination</h3>
+        <article class="flex flex-col md:flex-row justify-around w-full items-center uppercase">
+            <img src="" alt="" id="destination-img" class="py-32 md:py-0"/>
+            <div>
+                    <ul id="selector_planet" class="uppercase flex gap-5 justify-center md:justify-start">
+                        <li class="hover:tracking-wider hover:font-bold transition-all cursor-pointer" value="0">Moon</li>
+                        <li class="hover:tracking-wider hover:font-bold transition-all cursor-pointer" value="1">Mars</li>
+                        <li class="hover:tracking-wider hover:font-bold transition-all cursor-pointer" value="2">Europa</li>
+                        <li class="hover:tracking-wider hover:font-bold transition-all cursor-pointer" value="3">Titan</li>
+                    </ul>
+                <section class="flex flex-col gap-5 pt-5 items-center md:items-start">
+                    <h1 id="planet_name" class="text-8xl font-bellefair"></h1>
+                    <p id="planet_description" class="font-barlow max-w-lg capitalize"></p>
+                    <div class="bg-white/30 h-[.5px] w-full"></div>
+                    <div class="flex flex-col md:flex-row w-full md:justify-between gap-10 md:gap-0">
+                        <div class="flex flex-col items-center md:items-start">
+                            <p class="font-barlow-condensed text-xl tracking-[2px]">avg. distance</p>
+                            <p id="travel_distance"  class="text-3xl font-bellefair"></p>
+                        </div>
+                        <div class="flex flex-col items-center md:items-start">
+                            <p class="font-barlow-condensed text-xl tracking-[2px]">est. travel time</p>
+                            <p id="travel_time" class="text-3xl font-bellefair"></p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </article>
+    </section>
+</Layout>
+
+<script>
+    import {destinations} from "@assets/data.json"
+    let destination = document.getElementById('destination-img')
+    let planet_name = document.getElementById('planet_name')
+    let travel_distance = document.getElementById('travel_distance')
+    let planet_description = document.getElementById('planet_description')
+    let travel_time = document.getElementById('travel_time')
+    let selector_planet = document.getElementById('selector_planet')
+    let allSelectors = document.querySelectorAll('#selector_planet li')
+    let planet_n = 0
+    function changeSelector() {
+        allSelectors.forEach((selector) => {
+            selector.classList.remove('border-b-2')
+        })
+        allSelectors[planet_n].classList.add('border-b-2')
+    }
+    selector_planet?.addEventListener("click", (e) => {
+        planet_n = (e.target as HTMLLIElement).value
+        if (travel_distance && planet_name && planet_description && travel_time) {
+            planet_name.innerHTML = destinations[planet_n].name
+            planet_description.innerHTML = destinations[planet_n].description
+            travel_time.innerHTML = destinations[planet_n].travel
+            travel_distance.innerHTML = destinations[planet_n].distance
+        }
+        planet_description?.classList.add("animate-fade-in");
+        planet_name?.classList.add("animate-side-left")
+        travel_time?.classList.add("animate-side-top")
+        travel_distance?.classList.add("animate-side-top")
+        destination?.classList.add("animate-fade-in")
+        setTimeout(() => {
+        planet_description?.classList.remove("animate-fade-in");
+        planet_name?.classList.remove("animate-side-left")
+        travel_time?.classList.remove("animate-side-top")
+        travel_distance?.classList.remove("animate-side-top")
+        destination?.classList.remove("animate-fade-in")
+        }, 500);
+        destination?.setAttribute('src', destinations[planet_n].images.webp)
+        destination?.setAttribute('alt', `img with ${destinations[planet_n].name}`)
+        changeSelector()
+    })
+    if (travel_distance && planet_name && planet_description && travel_time) {
+            planet_name.innerHTML = destinations[planet_n].name
+            planet_description.innerHTML = destinations[planet_n].description
+            travel_time.innerHTML = destinations[planet_n].travel
+            travel_distance.innerHTML = destinations[planet_n].distance
+        }
+        changeSelector()
+        destination?.setAttribute('src', destinations[planet_n].images.webp)
+        destination?.setAttribute('alt', `img with ${destinations[planet_n].name}`)
+</script>

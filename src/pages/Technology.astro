@@ -1,0 +1,69 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout img="technology" title="Technology - Space Tourism" description="Space Tourism is a company that offers trips to space.">
+    <section class="flex flex-col gap-10 text-white/70 md:pl-40 py-20 h-screen">
+        <h3 class="font-barlow-condensed text-2xl uppercase tracking-wider text-center m-auto md:text-start md:m-0">03 Space launch 101</h3>
+        <article class="flex flex-col md:flex-row gap-10 md:gap-0 justify-between w-full items-center uppercase">
+            <ul id="tech_selector" class="order-2 md:order-1 flex md:flex-col justify-center items-center text-center gap-5 font-bellefair">
+                <li value="0" class="ring aspect-square rounded-full size-16 flex justify-center items-center text-3xl cursor-pointer">1</li>
+                <li value="1" class="ring aspect-square rounded-full size-16 flex justify-center items-center text-3xl cursor-pointer">2</li>
+                <li value="2" class="ring aspect-square rounded-full size-16 flex justify-center items-center text-3xl cursor-pointer">3</li>
+            </ul>
+            <div class="order-3 md:order-2 flex flex-col gap-5 md:items-start md:text-start items-center text-center">
+                <h3 class="text-2xl font-bellefair md:text-3xl text-white/40">The terminology...</h3>
+                <h2 class="font-bellefair md:text-6xl text-4xl tracking-tighter" id="fly_name"></h2>
+                <p class="w-lg capitalize max-w-sm sm:max-w-full font-barlow " id="fly_description"></p>
+            </div>
+            <img class="order-1 md:order-3 md:aspect-square object-contain md:max-w-[500px]" id="fly_img" src="" alt="">
+        </article>
+    </section>
+</Layout>   
+
+<script>
+    import {technology} from "@assets/data.json"
+    let fly_name = document.getElementById('fly_name')
+    let fly_description = document.getElementById('fly_description')
+    let fly_img = document.getElementById('fly_img') as HTMLImageElement
+    let tech_selector = document.getElementById('tech_selector')
+    let allSelectors = document.querySelectorAll('#tech_selector li')
+    let fly_n = 0
+    function updateImage() {
+    let isMobile = window.matchMedia("(max-width: 768px)").matches;
+    if (fly_img) {
+        fly_img.src = isMobile ? technology[fly_n].images.landscape : technology[fly_n].images.portrait;
+    }
+    }
+    updateImage();
+    window.addEventListener("resize", updateImage);
+    function changeSelector() {
+        allSelectors.forEach((selector) => {
+            selector.classList.remove('bg-white', 'text-primary')
+        })
+        allSelectors[fly_n].classList.add('bg-white', 'text-primary')
+    }
+    tech_selector?.addEventListener("click", (e) => {
+        fly_n = (e.target as HTMLLIElement).value
+        if (fly_name && fly_description && fly_img) {
+            fly_name.innerHTML = technology[fly_n].name
+            fly_description.innerHTML = technology[fly_n].description
+            updateImage()
+        }
+        fly_description?.classList.add("animate-fade-in");
+            fly_name?.classList.add("animate-side-left")
+            fly_img?.classList.add("animate-side-right")
+        setTimeout(() => {
+            fly_description?.classList.remove("animate-fade-in");
+            fly_name?.classList.remove("animate-side-left")
+            fly_img?.classList.remove("animate-side-right")
+        }, 500);
+        changeSelector()
+    })
+    if (fly_name && fly_description && fly_img) {
+        fly_name.innerHTML = technology[fly_n].name
+        fly_description.innerHTML = technology[fly_n].description
+        updateImage()
+    }
+    changeSelector()
+</script>
