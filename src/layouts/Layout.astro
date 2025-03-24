@@ -20,7 +20,9 @@ const { img, title, description } = Astro.props
 	<body id="layout" data-img={img} style={`background-image: url(/assets/${img}/background-${img}-desktop.jpg);`}
     class="bg-no-repeat bg-cover bg-center animate-fade-in">
 		<Nav></Nav>
-		<slot />
+		<main>
+			<slot />
+		</main>
 	</body>
 </html>
 
